@@ -1,7 +1,7 @@
 regions:
 - eu-west-1
 stacks:
-- membership 
+- flexible
 deployments:
   editorial-tools-help-lambda:
     type: aws-lambda
@@ -11,7 +11,6 @@ deployments:
       fileName: 'editorial-tools-help-lambda.zip'
       functionNames:
       - editorial-tools-help-lambda-
-      - fulfilment-node-hello-lambda-
 #  fulfilment-node-stub-cloudformation:
 #  N.B.: cloudformation deployment not quite finished
 #   type: cloud-formation
