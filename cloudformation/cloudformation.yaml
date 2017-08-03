@@ -72,6 +72,7 @@ Resources:
                     'Stage': !Sub ${Stage}
         DependsOn:
         - EditorialToolsHelpLambdaRole
+        - S3DistBucket
     EditorialToolsHelpLambdaAPIPermission:
         Type: AWS::Lambda::Permission
         Properties:
@@ -84,7 +85,7 @@ Resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: !Ref 'S3BucketName'
-    S3Bucket:
+    S3DistBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: editorial-tools-help-lambda-dist
