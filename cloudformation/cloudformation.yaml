@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: hello world lambda that deploys through riff-raff and gets credentials from s3
+
+Parameters:
+    App:
+        Description: Application name
+        Type: String
+        Default: editorial-tools-help-lambda
+    Stage:
+        Description: Stage name
+        Type: String
+        AllowedValues:
+            - PROD
+        Default: PROD
+    S3BucketName:
+      Description: Name of the S3 Bucket
+      Type: String
+      Default: 'editorial-tools-help'
+
+Resources:
+    EditorialToolsHelpLambdaRole:
+        Type: AWS::IAM::Role
+        Properties:
+            RoleName: !Sub EditorialToolsHelpLambda-${Stage}
+            AssumeRolePolicyDocument:
+                Statement:
+                    - Effect: Allow
+                      Principal:
+                          Service:
+                             - lambda.amazonaws.com
+                      Action:
+                          - sts:AssumeRole
+            Path: /
+            Policies:
+                - PolicyName: LambdaPolicy
+                  PolicyDocument:
+                      Statement:
+                          - Effect: Allow
+                            Action:
+                            - logs:CreateLogGroup
+                            - logs:CreateLogStream
+                            - logs:PutLogEvents
+                            - lambda:InvokeFunction
+                            Resource: "*"
+                - PolicyName: PrivateBucket
+                  PolicyDocument:
+                      Statement:
+                          - Effect: Allow
+                            Action:
+                              - s3:PutObject
+                              - s3:ListBucket
+                            Resource: !Sub arn:aws:s3:::${S3BucketName}/*
+    EditorialToolsHelpLambda:
+        Type: AWS::Lambda::Function
+        Properties:
+            Description: Lambda that retrieves data from Google sheets and dumps into S3 bucket
+            FunctionName:
+                !Sub editorial-tools-help-lambda-${Stage}
+            Code:
+                S3Bucket: editorial-tools-help-lambda-dist
+                S3Key: editorial-tools-help-lambda/editorial-tools-help-lambda.zip
+            Handler: index.handler
+            Role:
+                Fn::GetAtt:
+                - EditorialToolsHelpLambdaRole
+                - Arn
+            MemorySize: 512
+            Runtime: nodejs6.10
+            Timeout: 300
+            Environment:
+                Variables:
+                    'Stage': !Sub ${Stage}
+        DependsOn:
+        - EditorialToolsHelpLambdaRole
+    EditorialToolsHelpLambdaAPIPermission:
+        Type: AWS::Lambda::Permission
+        Properties:
+            Action: lambda:invokeFunction
+            FunctionName: !Sub editorial-tools-help-lambda-${Stage}
+            Principal: apigateway.amazonaws.com
+        DependsOn: EditorialToolsHelpLambda
+
+    S3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: !Ref 'S3BucketName'
+    S3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: editorial-tools-help-lambda-dist

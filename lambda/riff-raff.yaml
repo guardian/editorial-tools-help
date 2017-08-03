@@ -1,0 +1,19 @@
+regions:
+- eu-west-1
+stacks:
+- membership 
+deployments:
+  editorial-tools-help-lambda:
+    type: aws-lambda
+    parameters:
+      bucket: editorial-tools-help-lambda-dist
+      prefixStack: false
+      fileName: 'editorial-tools-help-lambda.zip'
+      functionNames:
+      - editorial-tools-help-lambda-
+      - fulfilment-node-hello-lambda-
+#  fulfilment-node-stub-cloudformation:
+#  N.B.: cloudformation deployment not quite finished
+#   type: cloud-formation
+#     parameters:
+#       templatePath: 'cloudformation/cloudformation.yaml'
