@@ -4,10 +4,10 @@
   "description": "hello world lambda that deploys through riff-raff and gets credentials from s3",
   "main": "index.js",
   "isAwsLambda": true,
-  "cloudformation": "cloudformation.yaml",
-  "projectName": "MemSub::Fulfilment::Test",
+  "cloudformation": "../cloudformation/cloudformation.yaml",
+  "projectName": "editorial-tools::help",
   "riffraffFile": "riff-raff.yaml",
-  "cloudformationAppTag": "fulfilment-node-stub-cloudformation",
+  "cloudformationAppTag": "editorial-tools-help-lambda",
   "buildDir": "dist",
   "devDependencies": {
     "babel-cli": "^6.24.1",
