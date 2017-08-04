@@ -87,15 +87,15 @@ Resources:
         BucketName: !Ref 'S3BucketName'
 
     GetConfigPolicy:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyName: GetConfigPolicy
-      PolicyDocument:
-        Statement:
-        - Effect: Allow
-          Action:
-          - s3:GetObject
-          Resource:
-          - arn:aws:s3:::guconf-flexible/editorial-tools-help/*
-      Roles:
-      - EditorialToolsHelpLambdaRole
+      Type: AWS::IAM::Policy
+      Properties:
+        PolicyName: GetConfigPolicy
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            Resource:
+            - arn:aws:s3:::guconf-flexible/editorial-tools-help/*
+        Roles:
+          - EditorialToolsHelpLambdaRole
