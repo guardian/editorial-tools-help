@@ -58,7 +58,7 @@ Resources:
                 !Sub editorial-tools-help-lambda-${Stage}
             Code:
                 S3Bucket: editorial-tools-help-lambda-dist
-                S3Key: editorial-tools-help-lambda/editorial-tools-help-lambda.zip
+                S3Key: !Sub flexible/${Stage}/editorial-tools-help-lambda/editorial-tools-help-lambda.zip
             Handler: index.handler
             Role:
                 Fn::GetAtt:
@@ -71,8 +71,8 @@ Resources:
                 Variables:
                     'Stage': !Sub ${Stage}
         DependsOn:
+        - S3Bucket
         - EditorialToolsHelpLambdaRole
-        - S3DistBucket
     EditorialToolsHelpLambdaAPIPermission:
         Type: AWS::Lambda::Permission
         Properties:
@@ -85,7 +85,3 @@ Resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: !Ref 'S3BucketName'
-    S3DistBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: editorial-tools-help-lambda-dist
