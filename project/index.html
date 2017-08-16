@@ -1,0 +1,33 @@
+<script id="questions-template" type="text/html">
+  <li>
+    <a href="<%= url %>"><%= question %></a>
+  </li>
+</script>
+
+
+<ul id="questions"></ul>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
+<script src="/filter.js"></script>
+<script>
+  var questions = [
+    {
+      "question": "test question",
+      "url": "https://theguardian.com/test1",
+      "keywords": "composer, workflow"
+    },
+    {
+      "question": "test question 2",
+      "url": "https://theguardian.com/test2",
+      "keywords": "tag manager, composer"
+    }
+  ];
+
+  var FJS = FilterJS(questions, '#questions', {
+  template: '#questions-template',
+  filter_on_init: true
+});
+</script>
