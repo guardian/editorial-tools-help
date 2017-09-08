@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Editorial Tools Help</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="/public/styles.css" type="text/css">
+
+  </head>
+  <body>
+    <script id="questions-template" type="text/html">
+      <li class="faq__item">
+        <a href="<%= url %>" class="faq__link">
+          <h3 class="faq__question"><%= question %></h3>
+          <span class="faq__keywords"><%= keywords %></span>
+          <span class="faq__keywords--hidden"><%= hiddenKeywords %></span>
+        </a>
+      </li>
+    </script>
+    <div class="row">
+      <input type="text" class="search" id="faq__searchbox" placeholder="Search&hellip;" fjs-search>
+    </div>
+    <div class="row">
+      <ul id="faq__questions" class="faq"></ul>
+    </div>
+  </body>
+
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+  <script src="/public/filter.js"></script>
+  <script>
+  fetch('/testData.json')
+    .then(function(response) {
+      return response.json();
+    }).then(function(responseJson) {
+      var FJS = FilterJS(responseJson.questions, '#faq__questions', {
+        template: '#questions-template',
+        filter_on_init: true,
+        search: { ele: '#faq__searchbox' }
+      });
+    });
+  </script>
+
+</html>
