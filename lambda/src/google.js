@@ -4,9 +4,9 @@ let fs = require('fs');
 let GoogleSpreadsheet = require('google-spreadsheet');
 let s3 = new AWS.S3();
 
-export function getSheetsJson(config){
-  const keysFileName = config.keyFile;
-  const doc = new GoogleSpreadsheet(config.sheetId);
+export function getSheetsJson(file, sheetId){
+  const keysFileName = file;
+  const doc = new GoogleSpreadsheet(sheetId);
   const keysFilePath = "/tmp/" + keysFileName;
 
   return new Promise((resolve, reject) =>{

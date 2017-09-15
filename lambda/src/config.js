@@ -14,6 +14,7 @@ export function loadFromS3() {
        }
        let string = creds.Body.toString();
        let j = JSON.parse(string);
+       console.log("successfully retrieved config");
        resolve(j);
      })
    })
