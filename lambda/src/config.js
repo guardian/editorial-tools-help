@@ -6,7 +6,7 @@ export function loadFromS3() {
    let stage = process.env.Stage
    console.log("running in stage " + stage)
    return new Promise((resolve, reject) =>{
-     s3.getObject({ Bucket: "guconf-flexible/editorial-tools-help", Key: "test.json" }, (err, creds) => {
+     s3.getObject({ Bucket: "guconf-flexible/editorial-tools-help", Key: "config.json" }, (err, creds) => {
        if(err){
          console.error("failed to retreive credentials", err)
          reject(err)
@@ -14,7 +14,6 @@ export function loadFromS3() {
        }
        let string = creds.Body.toString();
        let j = JSON.parse(string);
-       console.log(j);
        resolve(j);
      })
    })

@@ -11,19 +11,19 @@ export function handler(event, context, callback) {
     let sheetJson = getSheetsJson(conf).then(function(response) {
       let parsed = response.map(parseRows);
       let uploadParams = {
-        Bucket: "editorial-tools-help",
+        Bucket: conf.uploadBucket,
         Key: "data.json",
         Body: JSON.stringify(parsed)
       };
       let upload = s3.putObject(uploadParams, function(err, data) {
         if (err) console.error("could not upload to s3", err);
         else console.log('successfully uploaded to s3')
+        callback(null)
       })
-    });
-    // callback(null)
-  }).catch((error)=>{
-    console.error("Failed to get credentials",error)
-    callback(error)
+    }).catch((error)=>{
+      console.error("Failed to get credentials",error)
+      callback(error)
+    })
   })
 }
 
