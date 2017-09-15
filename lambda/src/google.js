@@ -5,7 +5,6 @@ let GoogleSpreadsheet = require('google-spreadsheet');
 let s3 = new AWS.S3();
 
 export function getSheetsJson(config){
-  //TODO: Make config values work
   const keysFileName = config.keyFile;
   const doc = new GoogleSpreadsheet(config.sheetId);
   const keysFilePath = "/tmp/" + keysFileName;
@@ -74,7 +73,6 @@ export function getSheetsJson(config){
             return;
           }
           console.log('sheet rows retrieved');
-          console.log(rows);
           return resolve(rows);
         });
       });
