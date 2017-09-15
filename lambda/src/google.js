@@ -26,8 +26,7 @@ export function getSheetsJson(file, sheetId){
         s3.getObject(params, function(err, response) {
           if (err) {
             console.error("failed to retreive google credentials", err);
-            reject(err);
-            return;
+            return reject(err);
           }
           return resolve(response.Body.toString());
         });

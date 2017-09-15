@@ -22,9 +22,8 @@
     "dist" : "yarn install --production --modules-folder dist/node_modules",
     "compile": "babel src -d dist",
     "riffraff": "VERBOSE=true ARTEFACT_PATH=$PWD yarn riffraff-artefact",
-    "local":"yarn run:index && yarn run:hello",
+    "local":"yarn run:index",
     "run:index": "lambda-local -l dist/index.js -e event.json -h handler -P ~/.aws/credentials -p composer -r eu-west-1 -t 30 -E {\\\"Stage\\\":\\\"CODE\\\"}",
-    "run:hello": "lambda-local -l dist/index.js -e event.json -h handler -P ~/.aws/credentials -p composer -r eu-west-1 -t 30 -E {\\\"Stage\\\":\\\"CODE\\\"}",
     "clean":"rm -rf dist && rm -rf target"
   },
   "dependencies": {

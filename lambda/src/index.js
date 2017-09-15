@@ -8,7 +8,7 @@ export function handler(event, context, callback) {
   console.log("Initialising.")
   let config = loadFromS3()
   config.then((conf)=> {
-    let sheetJson = getSheetsJson(conf.keyFile, conf.sheetId).then(function(response) {
+    let sheetJson = getSheetsJson(conf.keyFile, conf.sheetId).then((response) => {
       let parsed = response.map(parseRows);
       let uploadParams = {
         Bucket: conf.uploadBucket,
