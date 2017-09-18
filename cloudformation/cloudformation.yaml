@@ -16,7 +16,10 @@ Parameters:
       Description: Name of the S3 Bucket
       Type: String
       Default: 'editorial-tools-help'
-
+    TeamCityIAM:
+      Description: IAM for the TeamCity upload
+      Type: String
+      Default: 'arn:aws:iam::743583969668:user/editorial-tools-help-teamcity'
 Resources:
     EditorialToolsHelpLambdaRole:
         Type: AWS::IAM::Role
@@ -94,3 +97,24 @@ Resources:
         BucketName: !Ref 'S3BucketName'
         WebsiteConfiguration:
         IndexDocument: "index.html"
+
+    S3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref 'S3BucketName'
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Principle: !Ref TeamCityIAM
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/*']]
+            - Effect: Allow
+              Action: s3:*
+              Principal: *
+              Condition:
+                StringLike:
+                  aws:Referer:
+                    - "https://*.gutools.co.uk/*"
+                    - "https://*.dev-gutools.co.uk/*"
