@@ -92,3 +92,5 @@ Resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: !Ref 'S3BucketName'
+        WebsiteConfiguration:
+        IndexDocument: "index.html"
