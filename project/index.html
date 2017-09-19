@@ -15,7 +15,7 @@
         <a href="<%= url %>" class="faq__link">
           <h3 class="faq__question"><%= question %></h3>
           <span class="faq__keywords"><%= keywords %></span>
-          <span class="faq__keywords--hidden"><%= hiddenKeywords %></span>
+          <span class="faq__application"><%= application %></span>
         </a>
       </li>
     </script>
@@ -33,11 +33,11 @@
     crossorigin="anonymous"></script>
   <script src="/public/filter.js"></script>
   <script>
-  fetch('/testData.json')
+  fetch('/data.json')
     .then(function(response) {
       return response.json();
     }).then(function(responseJson) {
-      var FJS = FilterJS(responseJson.questions, '#faq__questions', {
+      var FJS = FilterJS(responseJson, '#faq__questions', {
         template: '#questions-template',
         filter_on_init: true,
         search: { ele: '#faq__searchbox' }

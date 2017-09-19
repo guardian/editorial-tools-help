@@ -30,7 +30,7 @@ export function handler(event, context, callback) {
 function parseRows(row) {
   return {
     question: row.question,
-    link: row.link,
+    url: row.link,
     keywords: row.keywords.replace(/ /g, "").split(","),
     application: row.application
   };
