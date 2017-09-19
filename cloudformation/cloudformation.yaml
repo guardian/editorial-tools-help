@@ -126,3 +126,12 @@ Resources:
                   aws:SourceIp:
                     - '77.91.248.0/21'
                     - '162.213.134.128/26'
+            - Effect: Allow
+              Action: s3:*
+              Principal: '*'
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/*']]
+              Condition:
+                StringLike:
+                  aws:Referer:
+                    - 'https://*.gutools.co.uk/*'
+                    - 'https://*.dev-gutools.co.uk/*'
