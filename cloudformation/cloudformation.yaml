@@ -96,7 +96,7 @@ Resources:
       Properties:
         BucketName: !Ref 'S3BucketName'
         WebsiteConfiguration:
-        IndexDocument: "index.html"
+          IndexDocument: "index.html"
 
     S3BucketPolicy:
       Type: AWS::S3::BucketPolicy
@@ -108,13 +108,21 @@ Resources:
               Action:
                 - s3:GetObject
                 - s3:PutObject
-              Principle: !Ref TeamCityIAM
+              Principal:
+                AWS: !Ref TeamCityIAM
               Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/*']]
             - Effect: Allow
+              Action:
+                - s3:ListBucket
+              Principal:
+                AWS: !Ref TeamCityIAM
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName']]
+            - Effect: Allow
               Action: s3:*
-              Principal: *
+              Principal: '*'
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/*']]
               Condition:
-                StringLike:
-                  aws:Referer:
-                    - "https://*.gutools.co.uk/*"
-                    - "https://*.dev-gutools.co.uk/*"
+                IpAddress:
+                  aws:SourceIp:
+                    - '77.91.248.0/21'
+                    - '162.213.134.128/26'
