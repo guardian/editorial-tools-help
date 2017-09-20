@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFront distribution for help.gutools.co.uk
+
+Parameters:
+  OriginBucketSite:
+    Description: The endpoint for the S3 bucket static hosted site
+    Type: String
+  SSLCertificate:
+    Description: ACM certificate for CloudFront
+    Type: String
+  S3BucketName:
+    Description: Name of the S3 Bucket
+    Type: String
+    Default: 'editorial-tools-help'
+  OriginAccessId:
+    Description: Id of OriginAccessIdentity user
+    Type: String
+    Default: 'EOQ223G6SK3D5'
+
+Resources:
+  distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: !Ref 'OriginBucketSite'
+          Id: help
+          S3OriginConfig:
+            OriginAccessIdentity: !Join ['', ['origin-access-identity/cloudfront/', !Ref 'OriginAccessId']]
+        Enabled: 'true'
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - DELETE
+          - GET
+          - HEAD
+          - OPTIONS
+          - PATCH
+          - POST
+          - PUT
+          TargetOriginId: help
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        ViewerCertificate:
+          AcmCertificateArn: !Ref 'SSLCertificate'
+          MinimumProtocolVersion: TLSv1
+          SslSupportMethod: sni-only
+        DefaultRootObject: index.html
+        HttpVersion: http2

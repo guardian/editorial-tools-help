@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: hello world lambda that deploys through riff-raff and gets credentials from s3
+Description: Lambda to retireve data & S3 bucket for help.gutools.co.uk
 
 Parameters:
     App:
@@ -20,6 +20,11 @@ Parameters:
       Description: IAM for the TeamCity upload
       Type: String
       Default: 'arn:aws:iam::743583969668:user/editorial-tools-help-teamcity'
+    OriginAccessId:
+      Description: Id of OriginAccessIdentity user for CloudFront distribution
+      Type: String
+      Default: 'EOQ223G6SK3D5'
+
 Resources:
     EditorialToolsHelpLambdaRole:
         Type: AWS::IAM::Role
@@ -128,10 +133,11 @@ Resources:
                     - '162.213.134.128/26'
             - Effect: Allow
               Action: s3:*
-              Principal: '*'
+              Principal:
+                AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref 'OriginAccessId']]
               Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/*']]
-              Condition:
-                StringLike:
-                  aws:Referer:
-                    - 'https://*.gutools.co.uk/*'
-                    - 'https://*.dev-gutools.co.uk/*'
+            - Effect: Allow
+              Action: s3:*
+              Principal:
+                AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref 'OriginAccessId']]
+              Resource: !Join ['', ['arn:aws:s3:::', !Ref 'S3BucketName', '/public/*']]
