@@ -15,7 +15,6 @@ Parameters:
   OriginAccessId:
     Description: Id of OriginAccessIdentity user
     Type: String
-    Default: 'EOQ223G6SK3D5'
   CNAME:
     Description: gutools domain CNAME
     Type: String
@@ -30,7 +29,7 @@ Resources:
         - DomainName: !Ref 'OriginBucketSite'
           Id: help
           S3OriginConfig:
-            OriginAccessIdentity: !Join ['', ['origin-access-identity/cloudfront/', !Ref 'OriginAccessId']]
+            OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${OriginAccessId}'
         Enabled: 'true'
         Aliases:
         - !Ref 'CNAME'
