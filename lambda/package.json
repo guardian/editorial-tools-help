@@ -4,7 +4,7 @@
   "description": "hello world lambda that deploys through riff-raff and gets credentials from s3",
   "main": "index.js",
   "isAwsLambda": true,
-  "cloudformation": "../cloudformation/cloudformation.yaml",
+  "cloudformation": "../cloudformation/lambda-bucket.yaml",
   "projectName": "editorial-tools::help",
   "riffraffFile": "riff-raff.yaml",
   "cloudformationAppTag": "editorial-tools-help-lambda",
