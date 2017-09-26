@@ -27,6 +27,11 @@
     </div>
   </body>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/url-search-params/0.10.0/url-search-params.js"></script>
+  <script>
+    var queryParams = new URLSearchParams(window.location.search);
+    var appParam = queryParams.get('app');
+  </script>
   <script
     src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
@@ -42,6 +47,9 @@
         filter_on_init: true,
         search: { ele: '#faq__searchbox' }
       });
+      if (appParam !== null) {
+        FJS.removeRecords({'application.$ne': appParam});
+      }
     });
   </script>
 

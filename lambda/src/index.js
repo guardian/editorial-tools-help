@@ -32,6 +32,6 @@ function parseRows(row) {
     question: row.question,
     url: row.link,
     keywords: row.keywords.replace(/ /g, "").split(","),
-    application: row.application
+    application: row.application.toLowerCase()
   };
 }
