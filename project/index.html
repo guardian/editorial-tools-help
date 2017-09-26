@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="/public/styles.css" type="text/css">
 
+    <script>
+      var appParam = window.location.search.split("=")[1];
+      console.log("Param = " + appParam);
+    </script>
+
   </head>
   <body>
     <script id="questions-template" type="text/html">
@@ -42,6 +47,9 @@
         filter_on_init: true,
         search: { ele: '#faq__searchbox' }
       });
+      if (appParam !== undefined) {
+        FJS.removeRecords({'application.$ne': appParam});
+      }
     });
   </script>
 
