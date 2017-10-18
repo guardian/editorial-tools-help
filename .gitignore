@@ -4,4 +4,4 @@ logs/
 node_modules/
 
 public/build
-public/data.json
+data.json
