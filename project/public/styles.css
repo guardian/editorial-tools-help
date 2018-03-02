@@ -62,10 +62,11 @@ ul {
   width: 100%;
   padding: 5px;
   border: 1px solid #dcdcdc;
+  margin-bottom: 1rem;
  }
 
  .search:focus {
-   box-shadow: 0 0 20px 0px rgba(20, 138, 210, 0.28);
+   border-color: #121212;
  }
 
 /**
@@ -95,7 +96,7 @@ ul {
  .faq__application {
   display: block;
  }
- 
+
  .faq__keywords {
   color: #bdbdbd;
  }
