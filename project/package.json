@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nano-server"
+    "dev": "touch data.json && aws s3 cp --profile composer s3://editorial-tools-help/data.json data.json && nano-server"
   },
   "author": "",
   "license": "ISC",
