@@ -78,7 +78,7 @@ Resources:
                 - EditorialToolsHelpLambdaRole
                 - Arn
             MemorySize: 512
-            Runtime: nodejs6.10
+            Runtime: nodejs8.10
             Timeout: 300
             Environment:
                 Variables:
