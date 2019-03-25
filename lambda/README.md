@@ -4,7 +4,7 @@ An AWS Lambda to retrieve help document links from https://docs.google.com/a/gua
 
 ## Quick Start!
 
-0. `nvm install 6.10 && nvm use 6.10`
+0. `nvm install`
 1. `yarn`
 2. `yarn compile && yarn local`
 
@@ -14,7 +14,7 @@ This is responsible for building the lambda, this is a standard npm style packag
 
 ### nvm
 
-The latest node runtime available in AWS for lambdas in 6.10. The `.nvmrc` file will keep you using this when developing.
+The latest node runtime available in AWS for lambdas in 8.10. The `.nvmrc` file will keep you using this when developing.
 
 ### babel
 
