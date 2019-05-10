@@ -100,6 +100,11 @@ Resources:
         BucketName: !Ref 'S3BucketName'
         WebsiteConfiguration:
           IndexDocument: "index.html"
+        PublicAccessBlockConfiguration: 
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
 
     S3BucketPolicy:
       Type: AWS::S3::BucketPolicy
