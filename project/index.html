@@ -6,6 +6,7 @@
     <title>Editorial Tools Help</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="http://pasteup.guim.co.uk/0.0.5/css/fonts.pasteup.min.css">
     <link rel="stylesheet" href="/public/styles.css" type="text/css">
 
   </head>
@@ -14,8 +15,8 @@
       <li class="faq__item">
         <a href="<%= url %>" target="_blank" class="faq__link">
           <h3 class="faq__question"><%= question %></h3>
-          <span class="faq__keywords"><%= keywords %></span>
           <span class="faq__application"><%= application %></span>
+          <span class="faq__keywords"><%= keywords %></span>
         </a>
       </li>
     </script>
@@ -38,10 +39,23 @@
     crossorigin="anonymous"></script>
   <script src="/public/filter.js"></script>
   <script>
-  fetch('/data.json')
-    .then(function(response) {
-      return response.json();
-    }).then(function(responseJson) {
+  // Split any keywords with capitalised like `PersonalityQuiz` to display better
+  const splitOnCapitals = word => {
+    const wordArr = word.match(/[A-Z]*[^A-Z]+/g) || [word];
+    return (wordArr.length > 0) ? wordArr.reduce((word, prev) => `${word} ${prev}`) : word;
+  }
+  const capitalise = word => word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase();
+
+  const formatResponse = responseJson => {
+    const formattedResponse = responseJson;
+    responseJson.map(function(item, i) {
+      formattedResponse[i].keywords = item.keywords.map(keyword => ` ${capitalise(splitOnCapitals(keyword))}`);
+    })
+
+    return formattedResponse;
+  }
+
+  function applyFilterJs(responseJson) {
       var FJS = FilterJS(responseJson, '#faq__questions', {
         template: '#questions-template',
         filter_on_init: true,
@@ -50,7 +64,11 @@
       if (appParam !== null) {
         FJS.removeRecords({'application.$ne': appParam});
       }
-    });
+  }
+  fetch('/data.json')
+    .then(response => response.json())
+    .then(formatResponse)
+    .then(applyFilterJs);
   </script>
 
 </html>
