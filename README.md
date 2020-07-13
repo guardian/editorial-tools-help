@@ -1,3 +1,6 @@
+**DEPRECATION WARNING**
+As of 13 July 2020, this project is deprecated and infrastructure torn down. This is because it is no longer used/needed.
+
 # Editorial Tools Help
 
 Static help site that lives at https://help.gutools.co.uk and can be embedded in Editorial Tools
